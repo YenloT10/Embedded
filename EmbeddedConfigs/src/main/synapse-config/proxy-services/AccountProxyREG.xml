@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="AccountProxyREG" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property expression="get-property('Action')" name="Test"/>
+                <property expression="get-property('To')" name="Test"/>
+            </log>
+            <log description="" level="custom" separator=",">
+                <property name="Status" value="Account Balance Request"/>
+            </log>
+            <switch source="fn:count(//*[local-name()='checkBalance'])">
+                <case regex="1.0">
+                    <log level="custom" separator=",">
+                        <property name="STATUS" value="CHK Balance Request"/>
+                    </log>
+                </case>
+                <default>
+                    <log level="custom" separator=",">
+                        <property name="STATUS" value="SAV Balance Request"/>
+                    </log>
+                </default>
+            </switch>
+            <log level="full"/>
+            <send>
+                <endpoint key="gov:endpoints/AccountEndpoint.xml"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </target>
+</proxy>
