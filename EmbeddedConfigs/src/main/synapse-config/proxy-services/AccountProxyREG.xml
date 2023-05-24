@@ -2,6 +2,7 @@
 <proxy name="AccountProxyREG" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
     <target>
         <inSequence>
+            <!-- COMMENT INSERTED -->
             <log level="custom">
                 <property expression="get-property('Action')" name="Test"/>
                 <property expression="get-property('To')" name="Test"/>
